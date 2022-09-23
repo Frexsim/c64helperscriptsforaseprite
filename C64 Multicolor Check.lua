@@ -50,10 +50,12 @@ local function checkPrerequesities(app)
     return false
   end
 
-  if spr.width~=160 or spr.height ~= 200 then
-    app.alert("The sprite dimensions should be 160x200!\n(Suggestion: set the pixel aspect ratio to 2:1!)")
-    return false
+  local sprcw = spr.width / 4
+  local sprch = spr.height / 8
+  if sprcw - math.floor(sprcw) ~= 0 or sprch - math.floor(sprch) ~= 0 then
+    app.alert("Invalid sprite dimensions, consider changing dimensions to: " .. math.floor(sprcw) * 4 .. "x" ..  math.floor(sprch) * 8 .. " or " .. math.ceil(sprcw) * 4 .. "x" ..  math.ceil(sprch) * 8 .. "!")
   end
+
 
   if spr.colorMode~= ColorMode.INDEXED then
     app.alert("The sprite should use indexed color mode!")
@@ -130,8 +132,8 @@ local function mapErrors(app, dlgdata, bgCol, doMarks)
         errimg:clear()
       end
 
-      for cy = 0, 25 do
-        for cx = 0, 40 do
+      for cy = 0, spr.height / 8 - 1 do
+        for cx = 0, spr.width / 4 - 1 do
           local cellCols = {}
           for ccy = 0, 7 do
             for ccx = 0, 3 do
@@ -206,8 +208,8 @@ local function mapOpportunities(app, dlgdata)
       local oppimg = Image(spr.spec)
       oppimg:clear()
 
-      for cy = 0, 25 do
-        for cx = 0, 40 do
+      for cy = 0, spr.height / 8 - 1 do
+        for cx = 0, spr.width / 4 - 1 do
           local cellCols = {}
           for ccy = 0, 7 do
             for ccx = 0, 3 do
