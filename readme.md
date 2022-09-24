@@ -56,7 +56,6 @@ Toggles the visibility of the opportunity map on and off.
 When editing, colors get automatically checked and replaced if they don't work, set the background color and start drawing pixels.
 Known bugs:
 * Undo crashes Aseprite.
-* Cells without background color allows for 4 colors instead of 3.
 
 
 ## Export Koala

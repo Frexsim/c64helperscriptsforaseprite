@@ -102,7 +102,7 @@ local function computeDifferences(differences, image, backgroundColor)
                 end
             end
 
-            if (tableCount(colors) > 4) then
+            if (tableCount(colors) > 3 and not colors[backgroundColor] or tableCount(colors) > 4 and colors[backgroundColor]) then
                 if (difference.prevPixel.color ~= backgroundColor) then
                     for pixelIndex, pixel in pairs(difference.newCell.pixels) do
                         if (pixel.color == difference.prevPixel.color) then
@@ -121,6 +121,22 @@ local function computeDifferences(differences, image, backgroundColor)
     end)
 end
 
+local function replaceBackgroundColor(colorToReplace, colorToReplaceWith)
+    local image = Image(app.activeSprite.spec)
+    image:drawSprite(app.activeSprite, app.activeFrame)
+    for pixelY = 0, image.height - 1 do
+        for pixelX = 0, image.width - 1 do
+            local pixelColor = image:getPixel(pixelX, pixelY)
+            if (pixelColor == colorToReplace) then
+                image:drawPixel(pixelX, pixelY, colorToReplaceWith)
+            end
+        end
+    end
+
+    app.activeLayer:cel(app.activeFrame).image = image
+    app.refresh()
+end
+
 local canRun = checkPrerequesities()
 if (canRun) then
     local sprite = app.activeSprite
@@ -129,10 +145,12 @@ if (canRun) then
     prevImage:drawSprite(sprite, app.activeFrame)
     local prevCells = getCells(prevImage)
 
+    local prevBackgroundColor = 0
+
     local dialog = Dialog("C64 Multicolor Live")
-    dialog:label({ id = "backgroundColorLabel", text = "Background Color:" })
-        :color({ id = "backgroundColor", color = 0 })
-    dialog:show({ wait = false })
+    dialog
+        :color({ id = "backgroundColor", label = "Background Color", color = prevBackgroundColor, onchange = function() replaceBackgroundColor(prevBackgroundColor, dialog.data.backgroundColor.index) prevBackgroundColor = dialog.data.backgroundColor.index end})
+        :show({ wait = false })
 
     sprite.events:on("change", function()
         local newImage = Image(sprite.spec)
