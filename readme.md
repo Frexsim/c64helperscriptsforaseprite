@@ -51,7 +51,7 @@ It will create a new layer called "Oppmap" and color codes the cells - marks cel
 ### Toggle Oppmap
 Toggles the visibility of the opportunity map on and off.
 
-## C64 multicolor check
+## C64 multicolor live
 
 When editing colors get automatically checked and replaced if they don't work, set the background color and start drawing pixels.
 Known bugs:
