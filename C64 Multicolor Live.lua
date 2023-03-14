@@ -152,17 +152,19 @@ if (canRun) then
         :color({ id = "backgroundColor", label = "Background Color", color = prevBackgroundColor, onchange = function() replaceBackgroundColor(prevBackgroundColor, dialog.data.backgroundColor.index) prevBackgroundColor = dialog.data.backgroundColor.index end})
         :show({ wait = false })
 
-    sprite.events:on("change", function()
-        local newImage = Image(sprite.spec)
-        newImage:drawSprite(sprite, app.activeFrame)
-        local newCells = getCells(newImage)
+    sprite.events:on("change", function(ev)
+        if (ev.fromUndo == false) then
+            local newImage = Image(sprite.spec)
+            newImage:drawSprite(sprite, app.activeFrame)
+            local newCells = getCells(newImage)
 
-        local differences = getDifferences(prevCells, newCells)
+            local differences = getDifferences(prevCells, newCells)
 
-        computeDifferences(differences, newImage, dialog.data.backgroundColor.index)
-        local newCells = getCells(newImage)
-        prevCells = newCells
+            computeDifferences(differences, newImage, dialog.data.backgroundColor.index)
+            local newCells = getCells(newImage)
+            prevCells = newCells
 
-        app.refresh()
+            app.refresh()
+        end
     end)
 end
