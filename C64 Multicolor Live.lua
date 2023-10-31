@@ -149,7 +149,7 @@ if (canRun) then
 
     local dialog = Dialog("C64 Multicolor Live")
     dialog
-        :color({ id = "backgroundColor", label = "Background Color", color = prevBackgroundColor, onchange = function() replaceBackgroundColor(prevBackgroundColor, dialog.data.backgroundColor.index) prevBackgroundColor = dialog.data.backgroundColor.index end})
+        :color({ id = "backgroundColor", label = "BG Color", color = prevBackgroundColor, onchange = function() replaceBackgroundColor(prevBackgroundColor, dialog.data.backgroundColor.index) prevBackgroundColor = dialog.data.backgroundColor.index end})
         :show({ wait = false })
 
     sprite.events:on("change", function(ev)

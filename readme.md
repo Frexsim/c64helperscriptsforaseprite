@@ -52,26 +52,26 @@ It will create a new layer called "Oppmap" and color codes the cells - marks cel
 Toggles the visibility of the opportunity map on and off.
 
 ## C64 multicolor live
+![](multichecklive_sshot.png)
 
 When editing, colors get automatically checked and replaced if they don't work, set the background color and start drawing pixels.
-Known bugs:
-* Undo crashes Aseprite.
+
+### BG Color
+The chosen background color to use when checking for errors.
 
 
 ## Export Koala
 ![](exportkoala_sshot.png)
 
 ### Save as
-The filename to save the koala/prg file, without extension. By default it is the same as the currently open asperite file name, but you can modify it by hand.
-Unfortunately it seems that there are no file picker accessible from the scripts yet. :(
+Where to save the file, and to save it as a .kla or .prg file.
+File formats:
+* Koala (.kla) will export the image as pure data .kla file, starting at the memory address 0x6000
+* PRG (.prg) will use the file "koalaview.prg" in the scripts directory, and appends the koala binary to that. The program is runnable on a C64, and simply displays the appended koala image.
 ### Load at $6000
 Specify the load address of the koala file.
 ### BG Color
 Which color index to use as the background color?
-### Koala/PRG radio buttons
-Choose the file format:
-* Koala will export the image as pure data .kla file, starting at the memory address 0x6000
-* PRG will use the file "koalaview.prg" in the scripts directory, and appends the koala binary to that. The program is runnable on a C64, and simply displays the appended koala image.
 
 
 ## C64 Hires check
@@ -103,6 +103,7 @@ Specify the load address of the Hi-Eddi file.
 Choose the file format:
 * hed will export the image as pure data .hed file.
 * PRG will use the file "hiresview.prg" in the scripts directory, and appends the hed binary to that. The program is runnable on a C64, and simply displays the appended image.
+
 
 ## Import Koala
 ![](importkoala_sshot.png)
