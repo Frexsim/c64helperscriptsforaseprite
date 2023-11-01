@@ -193,11 +193,13 @@ out:write(string.char(table.unpack(bitmap)))
 out:write(string.char(table.unpack(screenRAM)))
 out:write(string.char(table.unpack(colorRAM)))
 out:write(string.char(data.bgCol.index))
-out:write(string.char(data.borderCol.index))
 out:close()
 
 -- Compress with exomizer
 if isPrg == true then
+    -- border color
+    out:write(string.char(data.borderCol.index))
+
     -- Two spaces after since the X button covers the title lol
     local exomizerDialog = Dialog("Compress .prg with Exomizer?  "):button({
         id = "yes",

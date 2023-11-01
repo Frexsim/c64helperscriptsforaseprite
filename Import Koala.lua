@@ -55,25 +55,29 @@ if not isPrg and #file ~= 10003 then
     }
     return
 elseif isPrg then
-    -- Decrunch exomizer crunched file
-    local decrunchedfname = string.gsub(data.file, "[.]", ".desfx.")
-    local term, status, num = os.execute("exomizer desfx \"" .. data.file .. "\" -o \"" .. decrunchedfname .. "\"")
+    -- if file is crunched
+    local infile = nil
+    if #file < 10004 then
+        -- Decrunch exomizer crunched file
+        local decrunchedfname = string.gsub(data.file, "[.]", ".desfx.")
+        local term, status, num = os.execute("exomizer desfx \"" .. data.file .. "\" -o \"" .. decrunchedfname .. "\"")
 
-    local infile = io.open(decrunchedfname, "rb")
+        infile = io.open(decrunchedfname, "rb")
+    else
+        infile = io.open(data.file, "rb")
+    end
+
     if infile == nil then
         app.alert {
             title = "Error",
-            text = "Can't open file " .. decrunchedfname .. " for import."
+            text = "Can't open file " .. data.file .. " for import."
         }
         return
     end
-
     file = infile:read("*all")
-    infile:close()
 
     -- Find start of kla file
     klaOffset = #file - 10004
-    print(string.byte(file, #file), 0x0E, string.byte(file, #file) == 0x0E)
 end
 
 -- Create a new sprite to load into
