@@ -78,7 +78,7 @@ The chosen background color to use when checking for errors.
 ## Import Koala
 ![](Screenshots/ImportKoala.png)
 
-Just enter/paste a filename (with full path) in the entry box to load a C64 Koala format file into Aseprite.
+Choose a .kla or .prg file to import as an Aseprite sprite
 
 
 ## Export Koala
