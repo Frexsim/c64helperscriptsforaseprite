@@ -72,11 +72,8 @@ elseif isPrg then
     infile:close()
 
     -- Find start of kla file
-    klaOffset = #file - 10003
+    klaOffset = #file - 10004
     print(string.byte(file, #file), 0x0E, string.byte(file, #file) == 0x0E)
-    if string.byte(file, #file) == 0x0E then
-        klaOffset = klaOffset - 1
-    end
 end
 
 -- Create a new sprite to load into

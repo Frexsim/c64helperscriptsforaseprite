@@ -62,6 +62,10 @@ local d = Dialog("Export C64 Koala format"):file{
     id = "bgCol",
     label = "BG color:",
     color = Color(0)
+}:color{
+    id = "borderCol",
+    label = "Border color:",
+    color = Color(0)
 }:button{
     id = "ok",
     text = "&OK",
@@ -189,6 +193,7 @@ out:write(string.char(table.unpack(bitmap)))
 out:write(string.char(table.unpack(screenRAM)))
 out:write(string.char(table.unpack(colorRAM)))
 out:write(string.char(data.bgCol.index))
+out:write(string.char(data.borderCol.index))
 out:close()
 
 -- Compress with exomizer
