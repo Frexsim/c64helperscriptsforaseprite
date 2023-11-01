@@ -6,6 +6,10 @@ local function checkPrerequesities()
         return false
     end
 
+    if sprite.width ~= 160 or sprite.height ~= 200 then
+        app.alert("You are not using the normal resolution (160x200), other tools may not work as expected!")
+    end
+
     local spriteCellWidth = sprite.width / 4
     local spriteCellHeight = sprite.height / 8
     if spriteCellWidth - math.floor(spriteCellWidth) ~= 0 or spriteCellHeight - math.floor(spriteCellHeight) ~= 0 then
