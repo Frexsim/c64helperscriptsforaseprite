@@ -82,7 +82,7 @@ Just enter/paste a filename (with full path) in the entry box to load a C64 Koal
 
 
 ## Export Koala
-![](Screenshots/ExportKoala.png.png)
+![](Screenshots/ExportKoala.png)
 
 ### Save as
 Where to save the file, and to save it as a .kla or .prg file.
