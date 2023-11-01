@@ -191,10 +191,21 @@ out:write(string.char(table.unpack(colorRAM)))
 out:write(string.char(data.bgCol.index))
 out:close()
 
--- TODO: check if this is working, it doesn't generate any file but it doesn't crash either so i'm leaving this here
+-- Compress with exomizer
 if isPrg == true then
-  local crunchedfname = string.gsub(data.file, "[.]", ".c.")
-  local term, status, num = os.execute("exomizer sfx sys "..data.file.." -o "..crunchedfname)
+    -- Two spaces after since the X button covers the title lol
+    local exomizerDialog = Dialog("Compress .prg with Exomizer?  "):button({
+        id = "yes",
+        text = "&Yes",
+        focus = true
+    }):button({
+        text = "&No"
+    }):show()
+
+    if exomizerDialog.data.yes then
+        local crunchedfname = string.gsub(data.file, "[.]", ".c.")
+        local term, status, num = os.execute("exomizer sfx sys \"" .. data.file .. "\" -o \"" .. crunchedfname .. "\"")
+    end
 end
 
 app.alert("Exported successfully! File can be found at: " .. data.file)

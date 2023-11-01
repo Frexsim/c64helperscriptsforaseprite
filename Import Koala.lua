@@ -43,15 +43,40 @@ if infile == nil then
     return
 end
 
-local kla = infile:read("*all")
+local file = infile:read("*all")
 infile:close()
 
-if #kla ~= 10003 then
+local klaOffset = 0x0
+local isPrg = not not string.match(data.file, ".prg$")
+if not isPrg and #file ~= 10003 then
     app.alert {
         title = "Error",
-        text = "The kla file should be exactly 10003 bytes in size, the opened file is " .. #kla
+        text = "The .kla file should be exactly 10003 bytes in size, the opened file is " .. #file
     }
     return
+elseif isPrg then
+    -- Decrunch exomizer crunched file
+    local decrunchedfname = string.gsub(data.file, "[.]", ".desfx.")
+    local term, status, num = os.execute("exomizer desfx \"" .. data.file .. "\" -o \"" .. decrunchedfname .. "\"")
+
+    local infile = io.open(decrunchedfname, "rb")
+    if infile == nil then
+        app.alert {
+            title = "Error",
+            text = "Can't open file " .. decrunchedfname .. " for import."
+        }
+        return
+    end
+
+    file = infile:read("*all")
+    infile:close()
+
+    -- Find start of kla file
+    klaOffset = #file - 10003
+    print(string.byte(file, #file), 0x0E, string.byte(file, #file) == 0x0E)
+    if string.byte(file, #file) == 0x0E then
+        klaOffset = klaOffset - 1
+    end
 end
 
 -- Create a new sprite to load into
@@ -146,7 +171,12 @@ newSpr.pixelRatio = Size(2, 1)
 app.command.BackgroundFromLayer()
 local img = newSpr.cels[1].image
 
-local bgcol = string.byte(kla, 10003)
+local bgcol = nil
+if isPrg then
+    bgcol = string.byte(file, #file - 1)
+else
+    bgcol = string.byte(file, 10003)
+end
 
 local function getColorFor(cx, cy, idx)
     local colbyteidx = 0
@@ -154,19 +184,19 @@ local function getColorFor(cx, cy, idx)
     if idx == 1 then
         -- screen ram bits 4-7
         colbyteidx = 8003 + cx + cy * 40
-        return ((string.byte(kla, colbyteidx) & 0xF0) >> 4)
+        return ((string.byte(file, colbyteidx + klaOffset) & 0xF0) >> 4)
     end
 
     if idx == 2 then
         -- screen ram bits 0-3
         colbyteidx = 8003 + cx + cy * 40
-        return (string.byte(kla, colbyteidx) & 0x0F)
+        return (string.byte(file, colbyteidx + klaOffset) & 0x0F)
     end
 
     if idx == 3 then
         -- color ram bits 4-7
         colbyteidx = 9003 + cx + cy * 40
-        return (string.byte(kla, colbyteidx) & 0x0F)
+        return (string.byte(file, colbyteidx + klaOffset) & 0x0F)
     end
 
     -- background color
@@ -178,7 +208,7 @@ for cy = 0, 24 do
 
         for ccy = 0, 7 do
             -- get byte from bitmap data for current attribute cell's current row
-            local bmpbyte = string.byte(kla, 3 + cy * 8 * 40 + cx * 8 + ccy)
+            local bmpbyte = string.byte(file, 3 + cy * 8 * 40 + cx * 8 + ccy + 0 + klaOffset)
 
             -- extract the four color indexes from the byte
             local x = cx * 4
