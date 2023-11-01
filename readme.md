@@ -3,7 +3,7 @@
 
 ## Installing
 
->You need to run at least Aseprite v1.2.10 (beta at the time of writing) with lua scripting support.
+>You need to run at least Aseprite v1.3 (beta at the time of writing) with lua scripting support.
 
 Click on `File/Scripts/Open script folder` and copy the files from this repo there (well actually the lua and prg files are enough). Restart Aseprite, and the new commands should show up in the `File/Scripts` menu.
 
@@ -32,9 +32,8 @@ In the "New Sprite" dialog, set:
 
 
 
-## C64 multicolor check
-
-![](multicheck_sshot.png)
+## C64 Multicolor Check
+![](Screenshots/MulticolorCheck.png)
 
 ### Find best BG color
 Brute force search for the color which produces the least errors in the image.
@@ -51,32 +50,9 @@ It will create a new layer called "Oppmap" and color codes the cells - marks cel
 ### Toggle Oppmap
 Toggles the visibility of the opportunity map on and off.
 
-## C64 multicolor live
-![](multichecklive_sshot.png)
 
-When editing, colors get automatically checked and replaced if they don't work, set the background color and start drawing pixels.
-
-### BG Color
-The chosen background color to use when checking for errors.
-
-
-## Export Koala
-![](exportkoala_sshot.png)
-
-### Save as
-Where to save the file, and to save it as a .kla or .prg file.
-File formats:
-* Koala (.kla) will export the image as pure data .kla file, starting at the memory address 0x6000
-* PRG (.prg) will use the file "koalaview.prg" in the scripts directory, and appends the koala binary to that. The program is runnable on a C64, and simply displays the appended koala image.
-### Load at $6000
-Specify the load address of the koala file.
-### BG Color
-Which color index to use as the background color?
-
-
-## C64 Hires check
-
-![](hirescheck_sshot.png)
+## C64 Hires Check
+![](Screenshots/HiresCheck.png)
 
 ### Check
 Check the image for errors.
@@ -90,25 +66,45 @@ It will create a new layer called "Oppmap" and color codes the cells - marks cel
 Toggles the visibility of the opportunity map on and off.
 
 
+## C64 Multicolor Live
+![](Screenshots/MulticolorLive.png)
 
-## Export Hires
-![](exporthires_sshot.png)
+When editing, colors get automatically checked and replaced if they don't work, set the background color and start drawing pixels.
 
-### Save as
-The filename to save the hed/prg file, without extension. By default it is the same as the currently open asperite file name, but you can modify it by hand.
-Unfortunately it seems that there are no file picker accessible from the scripts yet. :(
-### Load at $2000
-Specify the load address of the Hi-Eddi file.
-### hed/PRG radio buttons
-Choose the file format:
-* hed will export the image as pure data .hed file.
-* PRG will use the file "hiresview.prg" in the scripts directory, and appends the hed binary to that. The program is runnable on a C64, and simply displays the appended image.
+### BG Color
+The chosen background color to use when checking for errors.
 
 
 ## Import Koala
-![](importkoala_sshot.png)
+![](Screenshots/ImportKoala.png)
 
 Just enter/paste a filename (with full path) in the entry box to load a C64 Koala format file into Aseprite.
 
-Unfortunately due to the limitations currently in Aseprite's script API, I can't provide a file selection dialog. :(
-Another missing function is the ability to set double wide pixel aspect ratio from script, so you also have to do that manually in the `Sprite/Properties...` menu.
+
+## Export Koala
+![](Screenshots/ExportKoala.png.png)
+
+### Save as
+Where to save the file, and to save it as a .kla or .prg file.
+
+File formats:
+* Koala (.kla) will export the image as pure data .kla file, starting at the memory address 0x6000
+* PRG (.prg) will use the file "koalaview.prg" in the scripts directory, and appends the koala binary to that. The program is runnable on a C64, and simply displays the appended koala image.
+### Load at $6000
+Specify the load address of the koala file.
+### BG Color
+Which color index to use as the background color?
+
+
+## Export Hires
+![](Screenshots/ExportHires.png)
+
+### Save as
+Where to save the file, and to save it as a .kla or .prg file.
+
+File formats:
+* hed (.hed) will export the image as pure data .hed file.
+* PRG (.prg) will use the file "hiresview.prg" in the scripts directory, and appends the hed binary to that. The program is runnable on a C64, and simply displays the appended image.
+
+### Load at $2000
+Specify the load address of the Hi-Eddi file.

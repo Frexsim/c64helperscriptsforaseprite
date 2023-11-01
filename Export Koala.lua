@@ -153,7 +153,6 @@ end
 
 -- TODO: Check if everything is ok - #bitmap should be 8000, #colors should be 1000
 -- is that enough?
-print(#bitmap, #colors)
 
 -- Build export structures
 local colorRAM = {}
@@ -192,8 +191,10 @@ out:write(string.char(table.unpack(colorRAM)))
 out:write(string.char(data.bgCol.index))
 out:close()
 
--- TODO: check if this is working, doesn't crash anything so i'm leaving this here
+-- TODO: check if this is working, it doesn't generate any file but it doesn't crash either so i'm leaving this here
 if isPrg == true then
   local crunchedfname = string.gsub(data.file, "[.]", ".c.")
   local term, status, num = os.execute("exomizer sfx sys "..data.file.." -o "..crunchedfname)
 end
+
+app.alert("Exported successfully! File can be found at: " .. data.file)
